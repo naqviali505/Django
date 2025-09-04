@@ -1,18 +1,21 @@
-from django.contrib.auth import login, authenticate
-from django.shortcuts import render
+from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 
-# Create your views here.
-def index(request):
-    return render(request, "blog/dashboard.html")
-
-def login_user(request):
-    return render(request, "blog/login_page.html")
-def user_authenticate(request):
-    username = request.POST.get("username")
-    password = request.POST.get("password")
-    user= authenticate(request,username=username, password=password)
-    if user:
-        login(request,user)
-        return render(request, "blog/dashboard.html", {"user": user})
+def register(request):
+    """User registration using Django's built-in form."""
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)  # log the user in immediately
+            return redirect("home")
     else:
-        return render(request, "blog/login_fail.html")
+        form = UserCreationForm()
+    return render(request, "blog/register.html", {"form": form})
+
+@login_required
+def home(request):
+    """Homepage - requires login."""
+    return render(request, "blog/home_page.html")
