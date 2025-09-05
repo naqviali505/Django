@@ -15,6 +15,9 @@
     <form method="post" action="{% url 'blog:login' %}?next={% url 'blog:home' %}">
     {% csrf_token %}
         {{ form.as_p }}
+        <div class="form-group">
+            <a href="{% url 'blog:forgot-password' %}">Forgot your password</a>
+        </div>
     <button type="submit" class="btn btn-primary">Login</button>
 
     {% if form.errors %}
