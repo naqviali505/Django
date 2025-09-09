@@ -14,12 +14,12 @@
     <h2 class="mb-4">Register</h2>
     <form method="post" action="{% url 'blog:register' %}">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{form.as_p }}
         <button type="submit" class="btn btn-primary">Register</button>
         {% if form.errors %}
-            <div class="alert alert-danger">
-                {{ form.errors }}
-            </div>
+        <div class="alert alert-danger">
+            {{ form.errors }}
+        </div>
         {% endif %}
     </form>
 </div>
