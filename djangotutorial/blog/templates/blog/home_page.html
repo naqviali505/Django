@@ -10,6 +10,14 @@
 </head>
 <body>
 {% include "blog/navbar.html" %}
-<h2>Login successful</h2>
+<h2>Blogs</h2>
+<ul>
+{% for blog in blogs %}
+    <li>{{ blog.title }} - {{ blog.categories }}</li>
+{% empty %}
+    <li>No blogs yet.</li>
+{% endfor %}
+</ul>
+
 </body>
 </html>
