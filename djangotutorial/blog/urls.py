@@ -10,6 +10,8 @@ urlpatterns = [
     redirect_authenticated_user=True), name="login"),
     path("register",views.register,name="register"),
     path("home",views.home,name="home"),
+    path("create-blog",views.create_blog,name="create-blog"),
+    path("blog/<int:pk>/",views.detailed_view),
     path("logout", auth_views.LogoutView.as_view(next_page="blog:login"), name="logout"),
 
     path("forgot-password/", auth_views.PasswordResetView.as_view(

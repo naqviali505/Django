@@ -6,6 +6,7 @@ from django.db import models
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
     content = models.TextField()
+    reply = models.ForeignKey('self', on_delete=models.CASCADE,null=True)
 
     def __str__(self):
         return self.content
@@ -24,6 +25,8 @@ class Blog(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     categories = models.ManyToManyField(BlogCategory)
     comments = models.ManyToManyField(Comment,blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
 
     def __str__(self):
         return self.title
@@ -31,7 +34,7 @@ class Blog(models.Model):
 class BlogForm(forms.ModelForm):
     class Meta:
         model = Blog
-        fields = ['title','content','user','categories', 'comments']
+        fields = ['title','content','categories']
 
 
 class BlogCategoryForm(forms.ModelForm):
