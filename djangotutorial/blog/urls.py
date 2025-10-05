@@ -5,11 +5,14 @@ from django.views.generic import RedirectView
 
 app_name = "blog"
 urlpatterns = [
-    path("",RedirectView.as_view(url=reverse_lazy("blog:login")),name="root_redirect"),
+    path("",RedirectView.as_view(url=reverse_lazy("blog:home")),name="root_redirect"),
     path("login", auth_views.LoginView.as_view(template_name="blog/login_page.html",
     redirect_authenticated_user=True), name="login"),
     path("register",views.register,name="register"),
     path("home",views.home,name="home"),
+    path("search",views.search,name="search"),
+    path("edit/<int:pk>",views.edit_blog,name="edit-blog"),
+    path("delete/<int:pk>/",views.delete_blog,name="delete-blog"),
     path("create-blog",views.create_blog,name="create-blog"),
     path("blog/<int:pk>/",views.detailed_view),
     path("logout", auth_views.LogoutView.as_view(next_page="blog:login"), name="logout"),
